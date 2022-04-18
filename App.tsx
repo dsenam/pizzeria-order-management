@@ -2,6 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import {useFonts, Roboto_400Regular, Roboto_700Bold} from '@expo-google-fonts/roboto'
 import AppLoading from 'expo-app-loading';
+import {ThemeProvider} from 'styled-components/native'
+import theme from '@src/theme';
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -14,9 +17,9 @@ export default function App() {
   }
 
   return (
-    <View>
+    <ThemeProvider theme={theme}>
       
-    </View>
+    </ThemeProvider>
   );
 }
 
