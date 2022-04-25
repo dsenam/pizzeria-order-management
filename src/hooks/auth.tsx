@@ -1,7 +1,13 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
 type User = {
@@ -20,7 +26,7 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-const USER_COLLECTION = '@gopizza:users'
+const USER_COLLECTION = "@gopizza:users";
 
 export const AuthContext = createContext({} as AuthContextData);
 
@@ -52,15 +58,18 @@ function AuthProvider({ children }: AuthProviderProps) {
                 isAdmin,
               };
 
-              
-              await AsyncStorage.setItem(USER_COLLECTION, JSON.stringify(userData))
+              await AsyncStorage.setItem(
+                USER_COLLECTION,
+                JSON.stringify(userData)
+              );
               setUser(userData);
-
             }
-
-            
-          }).catch(error => {
-            Alert.alert("Login", "Não foi possível buscar os dados de perfil do usuário")
+          })
+          .catch((error) => {
+            Alert.alert(
+              "Login",
+              "Não foi possível buscar os dados de perfil do usuário"
+            );
           });
       })
       .catch((error) => {
@@ -78,6 +87,22 @@ function AuthProvider({ children }: AuthProviderProps) {
       })
       .finally(() => setIsLogging(false));
   }
+
+  async function loadUserStorageData() {
+    setIsLogging(true);
+    const storedUser = await AsyncStorage.getItem(USER_COLLECTION);
+
+    if (storedUser) {
+      const userData = JSON.parse(storedUser) as User;
+      setUser(userData);
+    }
+
+    setIsLogging(false);
+  }
+
+  useEffect(() => {
+    loadUserStorageData();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ signIn, isLogging, user }}>
