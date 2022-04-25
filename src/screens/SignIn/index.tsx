@@ -19,12 +19,16 @@ import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
 export function SignIn() {
-  const { signIn, isLogging } = useAuth();
+  const { signIn, isLogging, forgotPassword } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function handleSignIn() {
     signIn(email, password);
+  }
+
+  function handleForgotPassoword() {
+    forgotPassword(email)
   }
 
   return (
@@ -49,7 +53,7 @@ export function SignIn() {
             secureTextEntry
           />
 
-          <ForgetPasswordButton>
+          <ForgetPasswordButton onPress={handleForgotPassoword}>
             <ForgetPasswordLabel>Esqueci minha senha</ForgetPasswordLabel>
           </ForgetPasswordButton>
 

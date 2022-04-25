@@ -20,7 +20,8 @@ type AuthContextData = {
   signIn: (email: string, password: string) => Promise<void>;
   isLogging: boolean;
   user: User | null;
-  signOut: () => Promise<void>
+  signOut: () => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>
 };
 
 type AuthProviderProps = {
@@ -102,9 +103,30 @@ function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function signOut() {
-    await auth().signOut()
-    await AsyncStorage.removeItem(USER_COLLECTION)
-    setUser(null)
+    await auth().signOut();
+    await AsyncStorage.removeItem(USER_COLLECTION);
+    setUser(null);
+  }
+
+  async function forgotPassword(email: string) {
+    if (!email) {
+      return Alert.alert("Redefinir senha", "Informe o e-mail.");
+    }
+
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() =>
+        Alert.alert(
+          "Redefinir senha",
+          "Enviamos um link no seu e-mail para redefinir senha"
+        )
+      )
+      .catch(() =>
+        Alert.alert(
+          "Redefinir senha",
+          "Não foi possível enviar o e-mail para redefinir a senha"
+        )
+      );
   }
 
   useEffect(() => {
@@ -112,7 +134,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ signIn, isLogging, user,signOut }}>
+    <AuthContext.Provider value={{ signIn, isLogging, user, signOut, forgotPassword }}>
       {children}
     </AuthContext.Provider>
   );
