@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Container,
@@ -12,10 +12,21 @@ import {
 import brandImg from "@assets/brand.png";
 
 import { KeyboardAvoidingView, Platform } from "react-native";
+
+import { useAuth } from "@hooks/auth";
+
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
 export function SignIn() {
+  const { signIn, isLogging } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSignIn() {
+    signIn(email, password);
+  }
+
   return (
     <Container>
       <KeyboardAvoidingView
@@ -27,16 +38,27 @@ export function SignIn() {
           <Input
             placeholder="E-mail"
             type="secondary"
+            onChangeText={setEmail}
             autoCorrect={false}
             autoCapitalize="none"
           />
-          <Input placeholder="Senha" type="secondary" secureTextEntry />
+          <Input
+            placeholder="Senha"
+            onChangeText={setPassword}
+            type="secondary"
+            secureTextEntry
+          />
 
           <ForgetPasswordButton>
-              <ForgetPasswordLabel>Esqueci minha senha</ForgetPasswordLabel>
+            <ForgetPasswordLabel>Esqueci minha senha</ForgetPasswordLabel>
           </ForgetPasswordButton>
 
-          <Button title="Entrar" type="secondary" />
+          <Button
+            title="Entrar"
+            type="secondary"
+            onPress={handleSignIn}
+            isLoading={isLogging}
+          />
         </Content>
       </KeyboardAvoidingView>
     </Container>
