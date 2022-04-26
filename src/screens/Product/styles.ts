@@ -1,3 +1,4 @@
+import { Button } from "@src/components/Button";
 import { LinearGradient } from "expo-linear-gradient";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import styled, { css } from "styled-components/native";
@@ -37,5 +38,18 @@ export const DeleteLabel = styled.Text`
     `}
 
 `;
+
+export const Upload = styled.View`
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 32px 0;
+`;
+
+export const PickImageButton = styled(Button)`
+    max-width: 90px;
+    margin-left: 32px;
+`
 
 
