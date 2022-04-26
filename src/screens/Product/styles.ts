@@ -1,4 +1,4 @@
-import { Button } from "@src/components/Button";
+import { Button } from "@components/Button";
 import { LinearGradient } from "expo-linear-gradient";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import styled, { css } from "styled-components/native";
