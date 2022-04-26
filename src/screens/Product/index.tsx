@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Header, Title, DeleteLabel } from "./styles";
 import { Platform, TouchableOpacity } from "react-native";
+import { ButtonBack } from "@src/components/ButtonBack";
 
 export function Product() {
   return (
@@ -9,6 +10,7 @@ export function Product() {
     >
 
         <Header>
+            <ButtonBack />
             <Title>Cadastrar</Title>
 
             <TouchableOpacity>
