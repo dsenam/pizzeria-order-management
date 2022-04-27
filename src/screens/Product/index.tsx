@@ -13,7 +13,7 @@ import {
   MaxCharacters,
 } from "./styles";
 import * as ImagePicker from "expo-image-picker";
-import { Platform, TouchableOpacity, ScrollView } from "react-native";
+import { Platform, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { ButtonBack } from "@components/ButtonBack";
 import { Photo } from "@components/Photo";
 import { Button } from "@components/Button";
@@ -41,6 +41,12 @@ export function Product() {
       if (!result.cancelled) {
         setImage(result.uri);
       }
+    }
+  }
+
+  async function handleAddProduct() {
+    if(!name.trim() || !description.trim() || !image || !priceSizeG || !priceSizeM || !priceSizeP) {
+      return Alert.alert('Cadastro', 'Por gentileza informe todas as informações necessárias')
     }
   }
 
@@ -87,7 +93,7 @@ export function Product() {
             <InputPrice onChangeText={setPriceSizeG} value={priceSizeG} size="G" />
           </InputGroup>
 
-          <Button title="Cadastrar pizza" isLoading={isLoading} />
+          <Button title="Cadastrar pizza" isLoading={isLoading} onPress={handleAddProduct}/>
         </Form>
       </ScrollView>
     </Container>
