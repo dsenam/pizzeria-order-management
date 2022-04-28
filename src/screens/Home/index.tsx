@@ -8,7 +8,10 @@ import {
   Header,
   GreetingEmoji,
   GreetingText,
-  Greting
+  Greting,
+  MenuHeader,
+  MenuItemsNumber,
+  Title
 } from "./styles";
 
 import { Search } from "@components/Search";
@@ -30,6 +33,11 @@ const {COLORS} = useTheme()
           </TouchableOpacity>
     </Header>
     <Search onSearch={() => {}} onClear={() => {}} />
+
+    <MenuHeader>
+      <Title>Cardápio</Title>
+      <MenuItemsNumber>10 pizzas</MenuItemsNumber>
+    </MenuHeader>
     </Container>
   );
 }
